@@ -1,20 +1,20 @@
 import random
 
 
-def random_number(lower_limit: float, upper_limit: float) -> float:
+def random_number(lower_limit: int, upper_limit: int) -> int:
     """ Generate random integer value in range (min, max) including limits min and max.
 
     Args:
-        min (float): Minimum integer value in given range (including)
-        max (float): Maximum integer value in given range (including)
+        min (int): Minimum integer value in given range (including)
+        max (int): Maximum integer value in given range (including)
 
     Returns:
-        float: Integer value in range (min, max) including limits min and max
+        int: Integer value in range (min, max) including limits min and max
     """
-    if lower_limit is not int or upper_limit is not int:
-        lower_limit = int(lower_limit)
-        upper_limit = int(upper_limit)
-    return random.randint(lower_limit, upper_limit)
+    try:
+        return random.randint(lower_limit, upper_limit)
+    except ValueError:
+        print("Invalid arguments: Arguments have to be integer values")
 
 
 def random_operator() -> str:
@@ -26,47 +26,62 @@ def random_operator() -> str:
     return random.choice(['+', '-', '*'])
 
 
-def calculate_two_numbers(number_1: float, number_2: float, operator: str) -> tuple[str, float]:
-    """ Calculation of two numbers n1 and n2 based on input arithmetic operator o (addition, subtraction or multiplication).
+def calculate_two_numbers(number_1: int, number_2: int, operator: str) -> tuple[str, int]:
+    """ Calculation of two numbers n1 and n2 based on input arithmetic operator (addition, subtraction or multiplication).
 
     Args:
-        n1 (float): Integer value that is used for calculation
-        n2 (float): Integer value that is used for calculation
-        o (str): String value representing arithmetic operator
+        number_1 (int): Integer value that is used for calculation
+        number_2 (int): Integer value that is used for calculation
+        operator (str): String value representing arithmetic operator
 
     Returns:
-        tuple[str, float]: Tuple of string value (arithmetic calculation) and integer value (result of mathematic operation)
+        tuple[str, int]: Tuple of string value (arithmetic calculation) and integer value (result of mathematic operation)
     """
+    # store calculation as string value for display:
     calculation = f"{number_1} {operator} {number_2}"
+    # calculate based on input operator:
     if operator == '+': result = number_1 + number_2
     elif operator == '-': result = number_1 - number_2
-    else: result = number_1 * number_2
+    else: result = number_1 * number_2 # else: '*' operator
     return calculation, result
 
 def math_quiz():
+    """ Math quiz that randomly presents arithmetic calculations (addition, subtraction, multiplication) of two integer numbers
+        and gives feedback to the user whether the input result by the user is correct or not.
+    """
+    # count is amount of correct answers by the user (score)
     count = 0
-    game_length = int(input("How often do you want to play?"))
-
-    #pi = 3.14159265359
 
     print("Welcome to the Math Quiz Game!")
     print("You will be presented with math problems, and you need to provide the correct answers.")
+    try:
+        game_length = int(input("How often do you want to play?"))
+    except ValueError:
+        print("User Input is not an integer!")
 
+    # iterate to present as many calculations as indicated by the user previously
     for _ in range(game_length):
-        number_1 = random_number(1, 10); 
-        number_2 = random_number(1, 5.5); 
-        operator = random_operator()
+        number_1 = random_number(1, 10); # random number in the range of 1 and 10 (including)
+        number_2 = random_number(1, 6); # random number in the range of 1 and 6 (including)
+        operator = random_operator() # random operator (addition, subtraction or multiplication)
 
-        PROBLEM, ANSWER = calculate_two_numbers(number_1=number_1, number_2=number_2, operator=operator)
+        # calculation part
+        PROBLEM, CORRECT_ANSWER = calculate_two_numbers(number_1=number_1, number_2=number_2, operator=operator)
         print(f"\nQuestion: {PROBLEM}")
         user_answer = input("Your answer: ")
-        user_answer = int(user_answer)
 
-        if user_answer == ANSWER:
+        # throw ValueError if user input is not integer value:
+        try:
+            user_answer = int(user_answer)
+        except ValueError:
+            print("User Input is not an integer!")
+
+        if user_answer == CORRECT_ANSWER:
             print("Correct! You earned a point.")
+            # increase user's score by one
             count += 1
         else:
-            print(f"Wrong answer. The correct answer is {ANSWER}.")
+            print(f"Wrong answer. The correct answer is {CORRECT_ANSWER}.")
 
     print(f"\nGame over! Your score is: {count}/{game_length}")
 
