@@ -10,4 +10,5 @@ setup(
     install_requires=[  # Optionale Abhängigkeiten
         # Liste hier Abhängigkeiten auf, die beim Installieren mitgeladen werden sollen
     ],
+    python_requires=">=3.9",
 )
