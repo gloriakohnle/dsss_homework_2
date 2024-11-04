@@ -8,7 +8,12 @@ setup(
     description="Math Quiz",
     packages=find_packages(),  # Findet alle Pakete automatisch
     install_requires=[  # Optionale Abhängigkeiten
-        # Liste hier Abhängigkeiten auf, die beim Installieren mitgeladen werden sollen
     ],
     python_requires=">=3.9",
+    entry_points = {
+        "console_scripts": [
+            "math_quiz=math_quiz.math_quiz:math_quiz", # Pfad zu math_quiz-Funktion in der math_quiz.py
+        ]
+    }
+
 )
