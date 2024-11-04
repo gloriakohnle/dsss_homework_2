@@ -20,7 +20,7 @@ pip install git+https://github.com/gloriakohnle/dsss_homework_2.git
 Side note:
 If you want to install the latest version from the repository, use:
 ```bash
-pip install --upgrade git+<your_git_link>
+pip install --upgrade git+https://github.com/gloriakohnle/dsss_homework_2.git
 ```
 ## Usage
 After installation, you can start the quiz game by running
